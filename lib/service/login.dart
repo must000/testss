@@ -6,11 +6,11 @@ class Service {
   login(String username, String password, BuildContext context) async {
     showDialog(
       context: context,
-      builder: (context) => Center(
-        child: Container(
+      builder: (context) => const Center(
+        child: SizedBox(
           width: 30,
           height: 30,
-          child: const CircularProgressIndicator(),
+          child: CircularProgressIndicator(),
         ),
       ),
     );
