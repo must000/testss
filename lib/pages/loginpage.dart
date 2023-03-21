@@ -14,79 +14,110 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+    bool statusRedEys = true;
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<MyProvider>(context);
     double size = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: MyConstant.orange,
+      backgroundColor: MyConstant.lightgreen,
       body: SafeArea(
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
                 children: [
-                  Row(mainAxisAlignment: MainAxisAlignment.center,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("username : admin",style: TextStyle(fontSize: 20),),
+                      const Text(
+                        "username : admin",
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("password : password123",style: TextStyle(fontSize: 20),),
+                    children: const [
+                      Text(
+                        "password : password123",
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ],
                   ),
                 ],
               ),
-            ),
-            Center(
-              child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-
-                children: [
-                      Text("Login",style: TextStyle(fontSize: 30),),
-
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Colors.white,
-                    ),
-                    height: 400,
-                    margin: EdgeInsets.symmetric(horizontal: size * 0.1),
-                    child: Padding(
-                      padding: const EdgeInsets.all(30.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          TextFormField(
-                            controller: usernameController,
-                            decoration:
-                                const InputDecoration(label: Text("Username")),
-                          ),
-                          TextFormField(
-                            controller: passwordController,
-                            decoration:
-                                const InputDecoration(label: Text("Password")),
-                          ),
-                          ElevatedButton(
-                              onPressed: () {
-                                Service().login(usernameController.text,
-                                    passwordController.text, context);
-                              },
-                              child: const Text("Login")),
-                          TextButton(
-                              onPressed: () {},
-                              child: const Text("Forget Password"))
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+              SizedBox(
+                height: MediaQuery.of(context).size.height *0.1
               ),
-            ),
-          ],
+           
+              Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  color: Colors.white,
+                ),
+                height: 350,
+                margin: EdgeInsets.symmetric(horizontal: size * 0.1),
+                child: Padding(
+                  padding: const EdgeInsets.all(30.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                         const Padding(
+                padding: EdgeInsets.only(bottom: 20),
+                child: Text(
+                  "Login",
+                  style: TextStyle(fontSize: 30),
+                ),
+              ),
+                      TextFormField(
+                        controller: usernameController,
+                        decoration:
+                            const InputDecoration(label: Text("Username")),
+                      ),
+                      TextFormField(
+                        controller: passwordController,  obscureText: statusRedEys,
+                        decoration:
+                          InputDecoration(label: Text("Password"),suffixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      statusRedEys = !statusRedEys;
+                    });
+                  },
+                  icon: statusRedEys
+                      ? const Icon(
+                          Icons.visibility_off,
+                          color: Colors.black,
+                        )
+                      : const Icon(
+                          Icons.visibility,
+                          color: Colors.black,
+                        ),
+                ),),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Service().login(usernameController.text,
+                                passwordController.text, context);
+                          },
+                          child: Text("Login"),
+                          style: ElevatedButton.styleFrom(
+                            primary: MyConstant.lightgreen,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                          onPressed: () {},
+                          child: const Text("Forget Password"))
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

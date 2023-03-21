@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:test_rudy/pages/homepage.dart';
 
 class MyProvider with ChangeNotifier {
-  List<String> nameCustomer = ["test1", "test2", "test3"];
-  
- 
+  List<String> nameCustomer = ["consumer 1", "consumer 2", "consumer 3"];
 
   addCustomer(String name) {
     nameCustomer.add(name);
@@ -49,5 +47,11 @@ class MyProvider with ChangeNotifier {
   deleteCustomer(int index) {
     nameCustomer.removeAt(index);
     notifyListeners();
+  }
+
+  clearCustomer(){
+    nameCustomer.clear();
+    notifyListeners();
+  
   }
 }

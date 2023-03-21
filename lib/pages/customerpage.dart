@@ -20,47 +20,80 @@ class _CustomerPageState extends State<CustomerPage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: MyConstant.darkorange,
+        backgroundColor: MyConstant.darkgreen,
+        actions: [
+          IconButton(
+            onPressed: () {
+              provider.clearCustomer();
+            },
+            icon: Icon(Icons.clear, color: Colors.red),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            TextFormField(
-              controller: customerController,
-              decoration: const InputDecoration(label: Text("customer name")),
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  if (customerController.text.isNotEmpty) {
-                    provider.addCustomer(customerController.text);
-                    customerController.text = "";
-                  }
-                },
-                style: ElevatedButton.styleFrom(primary: MyConstant.orange),
-                child: const Text("add")),
-            ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (context, index) => InkWell(
-                onTap: () => provider.changeCustomer(index, context),
-                child: Card(
-                  elevation: 5,
-                  child: ListTile(
-                    title: Text(provider.nameCustomer[index]),
-                    trailing: IconButton(
-                        icon: const Icon(
-                          Icons.delete_forever,
-                          color: Colors.red,
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(
+            FocusNode(),
+          ),
+          behavior: HitTestBehavior.opaque,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  controller: customerController,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(10.0),
                         ),
-                        onPressed: () {
-                          provider.deleteCustomer(index);
-                        }),
-                  ),
+                        borderSide: BorderSide(
+                            width: 0,
+                            style: BorderStyle.none,
+                            color: MyConstant.darkgreen),
+                      ),
+                      label: Text("customer name")),
                 ),
               ),
-              itemCount: provider.nameCustomer.length,
-            )
-          ],
+              Container(
+                width: 100,
+                child: ElevatedButton(
+                    onPressed: () {
+                      if (customerController.text.isNotEmpty) {
+                        provider.addCustomer(customerController.text);
+                        customerController.text = "";
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(primary: MyConstant.pink),
+                    child: Text("ADD",
+                        style: TextStyle(
+                          color: Colors.black,
+                        ))),
+              ),
+              ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemBuilder: (context, index) => InkWell(
+                  onTap: () => provider.changeCustomer(index, context),
+                  child: Card(
+                    elevation: 5,
+                    child: ListTile(
+                      title: Text(provider.nameCustomer[index]),
+                      trailing: IconButton(
+                          icon: const Icon(
+                            Icons.delete_forever,
+                            color: Colors.red,
+                          ),
+                          onPressed: () {
+                            provider.deleteCustomer(index);
+                          }),
+                    ),
+                  ),
+                ),
+                itemCount: provider.nameCustomer.length,
+              )
+            ],
+          ),
         ),
       ),
     );

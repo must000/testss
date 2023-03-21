@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     double size = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: MyConstant.orange,
+      backgroundColor: MyConstant.lightgreen,
       body: SafeArea(
         child: Center(
           child: Row(
@@ -29,7 +29,11 @@ class _HomePageState extends State<HomePage> {
             children: [
               Container(
                 width: size*0.3,
+                height:  MediaQuery.of(context).size.height *0.12,
                 child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                            primary: MyConstant.lightpink,
+                          ),
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -39,10 +43,14 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ));
                     },
-                    child: const Text("Profile")),
+                    child:Text("Profile" , style: TextStyle(color:Colors.black,)),)
               ),
               Container(width: size*0.3,
+                height:  MediaQuery.of(context).size.height *0.12,
                 child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                            primary: MyConstant.lightpink,
+                          ),
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -50,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                             builder: (context) => const CustomerPage(),
                           ));
                     },
-                    child: const Text("Customer")),
+                    child:Text("Customer", style: TextStyle(color:Colors.black,))),
               )
             ],
           ),
